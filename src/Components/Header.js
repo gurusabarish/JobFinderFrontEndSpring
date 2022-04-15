@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
+import { Menu2 } from "tabler-icons-react";
+
 // import {
 //   AppBar,
 //   Box,
@@ -71,7 +73,7 @@ const ResponsiveAppBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              {/* <MenuIcon /> */}
+              <Menu2 />
             </IconButton>
             <Menu
               id="menu-appbar"
