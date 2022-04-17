@@ -20,7 +20,7 @@ const Login = () => {
         <Typography variant="h5" align="center" sx={{ my: 2 }}>
           <User size={48} strokeWidth={2} color={"black"} />
         </Typography>
-        <Divider>SignIn</Divider>
+        <Divider>SignIn with email</Divider>
         <Box sx={{ my: 2, px: 2 }}>
           <SignInForm />
         </Box>

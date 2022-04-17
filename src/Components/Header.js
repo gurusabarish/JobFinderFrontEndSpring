@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,28 +10,17 @@ import Menu from "@mui/material/Menu";
 // import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+// import Button from "@mui/material/Button";
+// import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
 import { Menu2, User } from "tabler-icons-react";
 
-// import {
-//   AppBar,
-//   Box,
-//   Toolbar,
-//   IconButton,
-//   Typography,
-//   Menu,
-//   MenuIcon,
-//   Container,
-//   Avatar,
-//   Button,
-//   Tooltip,
-// } from "@mui/material";
-// import MenuItem from "@mui/material/MenuItem";
+// Menu Items
+import InterviewerMenu from "../menus/Interviewer";
 
 const ResponsiveAppBar = () => {
+  const [loginRedirect, setLoginRedirect] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -52,6 +41,7 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar position="static">
+      {loginRedirect && <Navigate to="/login" />}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -92,31 +82,7 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <Link to="/search">
-                <MenuItem>
-                  <Typography
-                    variant="body2"
-                    noWrap
-                    component="div"
-                    sx={{ mx: 2 }}
-                  >
-                    Search
-                  </Typography>
-                </MenuItem>
-              </Link>
-
-              <Link to="/search">
-                <MenuItem>
-                  <Typography
-                    variant="body2"
-                    noWrap
-                    component="div"
-                    sx={{ mx: 2 }}
-                  >
-                    Search
-                  </Typography>
-                </MenuItem>
-              </Link>
+              <InterviewerMenu />
             </Menu>
           </Box>
           <Typography
@@ -128,32 +94,15 @@ const ResponsiveAppBar = () => {
             Job Finder
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Typography variant="body2" noWrap component="div" sx={{ mx: 2 }}>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/search"
-              >
-                Search
-              </Link>
-            </Typography>
-            <Typography variant="body2" noWrap component="div" sx={{ mx: 2 }}>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/search"
-              >
-                Search
-              </Link>
-            </Typography>
+            <InterviewerMenu />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: "white" }}>
-                  <User strokeWidth={2} color={"black"} />
-                </Avatar>
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar sx={{ bgcolor: "white" }}>
+                <User strokeWidth={2} color={"black"} />
+              </Avatar>
+            </IconButton>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -176,6 +125,10 @@ const ResponsiveAppBar = () => {
                   noWrap
                   component="div"
                   sx={{ mx: 2 }}
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    setLoginRedirect(true);
+                  }}
                 >
                   Logout
                 </Typography>

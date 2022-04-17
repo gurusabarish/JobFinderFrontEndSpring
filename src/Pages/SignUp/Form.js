@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 
 import config from "../../config";
 
@@ -12,14 +12,14 @@ import axios from "axios";
 
 import {
   FormControl,
-  FormControlLabel,
+  // FormControlLabel,
   FormHelperText,
-  Grid,
-  IconButton,
-  InputAdornment,
+  // Grid,
+  // IconButton,
+  // InputAdornment,
   InputLabel,
   OutlinedInput,
-  Stack,
+  // Stack,
   Box,
   Button,
   Typography,
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUpForm = (props, { ...others }) => {
   const classes = useStyles();
+  const [redirect, setRedirect] = useState(false);
 
   return (
     <Formik
@@ -56,17 +57,18 @@ const SignUpForm = (props, { ...others }) => {
         try {
           setSubmitting(true);
           try {
-            const requestOptions = {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(values),
-            };
-            const data = await fetch(
+            const response = await axios.post(
               `${config.apiURL}/api/auth/signup`,
-              requestOptions
+              values
             );
-            const response = data.json();
 
+            console.log(response);
+            console.log(values);
+
+            if (response.status === 200) {
+              localStorage.setItem("token", response.data.data._id);
+              setRedirect(true);
+            }
             // console.log(response);
             console.log(values);
             setStatus({ success: true });
@@ -95,6 +97,8 @@ const SignUpForm = (props, { ...others }) => {
         values,
       }) => (
         <form noValidate onSubmit={handleSubmit} {...others}>
+          {redirect && <Navigate to="/" />}
+
           <FormControl
             fullWidth
             error={Boolean(touched.name && errors.name)}
