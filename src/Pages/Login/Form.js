@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 
 import config from "../../config";
 
@@ -33,19 +33,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignUpForm = (props, { ...others }) => {
+const SignInForm = (props, { ...others }) => {
   const classes = useStyles();
+  const [redirect, setRedirect] = useState(false);
 
   return (
     <Formik
       initialValues={{
-        name: "",
         password: "",
         email: "",
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().max(255).required("Name is required"),
-        // username: Yup.string().max(255).required("Username is required"),
         password: Yup.string().max(255).required("Password is required"),
         email: Yup.string()
           .email("Invalid email address")
@@ -56,19 +54,18 @@ const SignUpForm = (props, { ...others }) => {
         try {
           setSubmitting(true);
           try {
-            const requestOptions = {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(values),
-            };
-            const data = await fetch(
-              `${config.apiURL}/api/auth/signup`,
-              requestOptions
+            const response = await axios.post(
+              `${config.apiURL}/api/auth/signin`,
+              values
             );
-            const response = data.json();
 
-            // console.log(response);
+            console.log(response);
             console.log(values);
+
+            if (response.status === 200) {
+              localStorage.setItem("token", response.data.data._id);
+              setRedirect(true);
+            }
             setStatus({ success: true });
             setSubmitting(false);
           } catch (error) {
@@ -95,24 +92,7 @@ const SignUpForm = (props, { ...others }) => {
         values,
       }) => (
         <form noValidate onSubmit={handleSubmit} {...others}>
-          <FormControl
-            fullWidth
-            error={Boolean(touched.name && errors.name)}
-            className={classes.formControl}
-          >
-            <InputLabel>Name</InputLabel>
-            <OutlinedInput
-              value={values.name}
-              name="name"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              label="Name"
-            />
-          </FormControl>
-          {touched.name && errors.name && (
-            <FormHelperText error>{errors.name}</FormHelperText>
-          )}
-          <Box mb={2} />
+          {redirect && <Navigate to="/" />}
 
           <FormControl
             fullWidth
@@ -155,7 +135,7 @@ const SignUpForm = (props, { ...others }) => {
           <Box mb={2} />
 
           <Typography variant="body2" align="center">
-            Already have an account? <Link to="/login">Login</Link>
+            Create an account? <Link to="/signup">SignUp</Link>
           </Typography>
 
           {errors.submit && (
@@ -190,7 +170,7 @@ const SignUpForm = (props, { ...others }) => {
               variant="contained"
               color="secondary"
             >
-              Sign Up
+              Sign In
             </Button>
           </Box>
         </form>
@@ -199,4 +179,4 @@ const SignUpForm = (props, { ...others }) => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

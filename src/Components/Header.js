@@ -1,4 +1,6 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,7 +14,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-import { Menu2 } from "tabler-icons-react";
+import { Menu2, User } from "tabler-icons-react";
 
 // import {
 //   AppBar,
@@ -28,9 +30,6 @@ import { Menu2 } from "tabler-icons-react";
 //   Tooltip,
 // } from "@mui/material";
 // import MenuItem from "@mui/material/MenuItem";
-
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -61,7 +60,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            LOGO
+            Job Finder
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -93,11 +92,31 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              <Link to="/search">
+                <MenuItem>
+                  <Typography
+                    variant="body2"
+                    noWrap
+                    component="div"
+                    sx={{ mx: 2 }}
+                  >
+                    Search
+                  </Typography>
                 </MenuItem>
-              ))}
+              </Link>
+
+              <Link to="/search">
+                <MenuItem>
+                  <Typography
+                    variant="body2"
+                    noWrap
+                    component="div"
+                    sx={{ mx: 2 }}
+                  >
+                    Search
+                  </Typography>
+                </MenuItem>
+              </Link>
             </Menu>
           </Box>
           <Typography
@@ -106,24 +125,33 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            LOGO
+            Job Finder
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+            <Typography variant="body2" noWrap component="div" sx={{ mx: 2 }}>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/search"
               >
-                {page}
-              </Button>
-            ))}
+                Search
+              </Link>
+            </Typography>
+            <Typography variant="body2" noWrap component="div" sx={{ mx: 2 }}>
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/search"
+              >
+                Search
+              </Link>
+            </Typography>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ bgcolor: "white" }}>
+                  <User strokeWidth={2} color={"black"} />
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -142,11 +170,16 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem>
+                <Typography
+                  variant="body2"
+                  noWrap
+                  component="div"
+                  sx={{ mx: 2 }}
+                >
+                  Logout
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
