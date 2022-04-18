@@ -29,8 +29,9 @@ const Home = () => {
         `${config.apiURL}/api/auth/user/${localStorage.getItem("token")}`
       );
       setUser(user);
+      console.log(user);
 
-      if ((user.data.data.role = "interviewer")) {
+      if (user.data.data.role === "interviewer") {
         setInterviewer(true);
       }
     }

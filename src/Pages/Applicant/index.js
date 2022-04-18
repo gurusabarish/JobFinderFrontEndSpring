@@ -10,16 +10,13 @@ import config from "../../config";
 // MainCard
 import MainCard from "../../Components/MainCard";
 
-// Companies
-// import CompaniesList from "./company/list";
-// import CreateCompany from "./company/create";
-
 // Jobs
-// import JobsList from "./job/list";
+import JobsForApplicant from "./Jobs";
 // import CreateJob from "./job/create";
 
 const Applicant = (props) => {
   const [createProfile, setCreateProfile] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
 
   useEffect(() => {
     checkUserProfile();
@@ -29,8 +26,12 @@ const Applicant = (props) => {
     const profile = await axios.get(
       `${config.apiURL}/api/profile/${localStorage.getItem("token")}`
     );
-    if (profile.data.data.status === 500) {
+    console.log(profile);
+    if (profile.data.status === 500) {
       setCreateProfile(true);
+    }
+    if (profile.data.status === 200) {
+      setUserProfile(profile.data.data);
     }
   };
 
@@ -40,43 +41,43 @@ const Applicant = (props) => {
 
       <Grid item xs={12} sm={6}>
         <MainCard
-          title="Jobs recommended by your profile"
-          secondary={
-            <Button
-              disableElevation
-              // onClick={() => {
-              //   setCreateJob(true);
-              // }}
-              size="medium"
-              variant="contained"
-              style={{ borderRadius: config.borderRadius }}
-            >
-              Create
-            </Button>
-          }
+          title="Jobs recommended"
+          // secondary={
+          //   <Button
+          //     disableElevation
+          //     // onClick={() => {
+          //     //   setCreateJob(true);
+          //     // }}
+          //     size="medium"
+          //     variant="contained"
+          //     style={{ borderRadius: config.borderRadius }}
+          //   >
+          //     Create
+          //   </Button>
+          // }
         >
-          <h1>Aplicant</h1>
+          {userProfile && <JobsForApplicant userProfile={userProfile} />}
         </MainCard>
       </Grid>
 
       <Grid item xs={12} sm={6}>
         <MainCard
           title="Applied Jobs"
-          secondary={
-            <Button
-              disableElevation
-              // onClick={() => {
-              //   setCreateCompany(true);
-              // }}
-              size="medium"
-              variant="contained"
-              style={{ borderRadius: config.borderRadius }}
-            >
-              Create
-            </Button>
-          }
+          // secondary={
+          //   <Button
+          //     disableElevation
+          //     // onClick={() => {
+          //     //   setCreateCompany(true);
+          //     // }}
+          //     size="medium"
+          //     variant="contained"
+          //     style={{ borderRadius: config.borderRadius }}
+          //   >
+          //     Create
+          //   </Button>
+          // }
         >
-          <h1>Recently applied jobs</h1>
+          <p>Recently applied jobs</p>
           {/* {createCompany ? (
             <CreateCompany handleCreateCompany={handleCreateCompany} />
           ) : (
