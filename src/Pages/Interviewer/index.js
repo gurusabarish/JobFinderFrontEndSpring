@@ -30,7 +30,7 @@ const Interviewer = () => {
   };
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={8}>
+      <Grid item xs={12} sm={6}>
         <MainCard
           title="Jobs"
           secondary={
@@ -55,7 +55,7 @@ const Interviewer = () => {
         </MainCard>
       </Grid>
 
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={6}>
         <MainCard
           title="Companies"
           secondary={
