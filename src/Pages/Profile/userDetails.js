@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { Typography } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
 
 // Config
 import config from "../../config";
 
-const UserDetails = () => {
+const UserDetails = (props) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    getProfileDeatails();
+    getProfileDetails();
   }, []);
 
-  const getProfileDeatails = async () => {
+  const getProfileDetails = async () => {
     try {
       const response = await axios.get(
         `${config.apiURL}/api/profile/${localStorage.getItem("token")}`
@@ -41,12 +41,39 @@ const UserDetails = () => {
       ) : (
         <>
           {user === null ? (
-            <Typography align="center" variant="body2" sx={{ mt: 5, mb: 1 }}>
+            <Typography align="center" variant="h6" sx={{ mt: 5, mb: 1 }}>
               Create your profile
+              <Box sx={{ my: 2 }}>
+                <Button
+                  disableElevation
+                  onClick={() => {
+                    props.handleEditProfile(true);
+                  }}
+                  size="medium"
+                  variant="contained"
+                  style={{ borderRadius: config.borderRadius }}
+                >
+                  Create
+                </Button>
+              </Box>
             </Typography>
           ) : (
             <>
-              <div>User Details</div>
+              <Typography align="center" variant="body2" sx={{ mt: 5, mb: 1 }}>
+                First Name: {user.firstName}
+              </Typography>
+
+              <Typography align="center" variant="body2" sx={{ mt: 5, mb: 1 }}>
+                Last Name: {user.lastName}
+              </Typography>
+
+              <Typography align="center" variant="body2" sx={{ mt: 5, mb: 1 }}>
+                Email Address: {user.email}
+              </Typography>
+
+              <Typography align="center" variant="body2" sx={{ mt: 5, mb: 1 }}>
+                Contact number: {user.phone}
+              </Typography>
             </>
           )}
         </>
