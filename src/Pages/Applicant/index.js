@@ -12,6 +12,8 @@ import MainCard from "../../Components/MainCard";
 
 // Jobs
 import JobsForApplicant from "./Jobs";
+import RecentlyAppliedList from "./RecentlyApplied/index";
+
 // import CreateJob from "./job/create";
 
 const Applicant = (props) => {
@@ -77,7 +79,8 @@ const Applicant = (props) => {
           //   </Button>
           // }
         >
-          <p>Recently applied jobs</p>
+          {userProfile && <RecentlyAppliedList />}
+          
           {/* {createCompany ? (
             <CreateCompany handleCreateCompany={handleCreateCompany} />
           ) : (

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -44,14 +44,17 @@ const ResponsiveAppBar = () => {
       {loginRedirect && <Navigate to="/login" />}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          
+          <Link to="/" style={{textDecoration: "none", color: "white"}}>
+            <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            Job Finder
-          </Typography>
+            >
+                Job Finder
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -85,14 +88,17 @@ const ResponsiveAppBar = () => {
               <InterviewerMenu />
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            Job Finder
-          </Typography>
+          
+            <Link to="/" style={{textDecoration: "none", color: "white"}}>
+              <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+              >
+                Job Finder
+              </Typography>
+            </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <InterviewerMenu />
           </Box>
