@@ -24,18 +24,11 @@ const columns = [
   { id: "title", label: "Job Role", minWidth: 170 },
   { id: "description", label: "Description", minWidth: 170 },
   { id: "city", label: "City", minWidth: 100 },
-  {
-    id: "company",
-    label: "Company Name",
-    minWidth: 130,
-  },
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 30,
-    align: "right",
-    format: (value) => value.toFixed(2),
-  },
+  // {
+  //   id: "company",
+  //   label: "Company Name",
+  //   minWidth: 130,
+  // },
 ];
 
 export default function RecentlyAppliedList(props) {
@@ -47,12 +40,12 @@ export default function RecentlyAppliedList(props) {
     try {
       console.log("from recently applied jobs");
       const response = await axios.get(
-        `${config.apiURL}/api/applicant/get/${localStorage.getItem("token")}`
+        `${config.apiURL}/api/applicant/${localStorage.getItem("token")}`
       );
       console.log("Recently applied", response);
   
       if (response.data.status === 200) {
-        setRows(response.data.data);
+        setRows(response.data.data.appliedJobs);
       }
     } catch(err) {
       console.log(err);
