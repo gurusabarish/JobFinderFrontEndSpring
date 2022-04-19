@@ -19,6 +19,7 @@ import SubCard from "../../../Components/SubCard";
 
 import config from "../../../config";
 import ListForm from "./listForm";
+import Action from "./action";
 
 const columns = [
   { id: "title", label: "Job title", minWidth: 170 },
@@ -32,6 +33,11 @@ const columns = [
     id: "city",
     label: "City",
     minWidth: 130,
+    align: "right",
+  },
+  {
+    id: "action",
+    label: "Action",
     align: "right",
   },
 ];
@@ -120,13 +126,22 @@ export default function JobsList(props) {
                           {columns.map((column) => {
                             const value = row[column.id];
 
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
+                            if (column.id === "action") {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  <Action data={row} />
+                                </TableCell>
+                              );
+                            } else {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {column.format && typeof value === "number"
+                                    ? column.format(value)
+                                    : value}
+                                </TableCell>
+                              );
+                            }
+                            
                           })}
                         </TableRow>
                       );
