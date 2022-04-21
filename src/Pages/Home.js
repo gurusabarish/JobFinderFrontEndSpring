@@ -6,12 +6,14 @@ import { Typography } from "@mui/material";
 import Interviewer from "./Interviewer";
 import Applicant from "./Applicant";
 
+import SuperAdmin from "./SuperAdmin";
+
 // Config
 import config from "../config";
 
 const Home = () => {
   const [loginRedirect, setLoginRedirect] = useState(false);
-  const [interviewer, setInterviewer] = useState(false);
+  const [superAdmin, setSuperAdmin] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,13 +28,13 @@ const Home = () => {
       setLoginRedirect(true);
     } else {
       const user = await axios.get(
-        `${config.apiURL}/api/auth/user/${localStorage.getItem("token")}`
+        `${config.apiURL}/api/v1/auth/user/${localStorage.getItem("token")}`
       );
       setUser(user);
-      console.log(user);
 
-      if (user.data.data.role === "interviewer") {
-        setInterviewer(true);
+      if (user.data.role === "ROLE_SUPER_ADMIN") {
+        setSuperAdmin(true);
+        console.log(user.data);
       }
     }
     setLoading(false);
@@ -49,10 +51,11 @@ const Home = () => {
             <Navigate to="/login" />
           ) : (
             <>
-              {interviewer ? (
-                <Interviewer user={user} />
+              {superAdmin ? (
+                <SuperAdmin user={user} />
               ) : (
-                <Applicant user={user} />
+                <></>
+                // <Applicant user={user} />
               )}
             </>
           )}
