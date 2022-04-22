@@ -30,7 +30,7 @@ const Home = () => {
       const user = await axios.get(
         `${config.apiURL}/api/v1/auth/user/${localStorage.getItem("token")}`
       );
-      setUser(user);
+      setUser(user.data);
 
       if (user.data.role === "ROLE_SUPER_ADMIN") {
         setSuperAdmin(true);
