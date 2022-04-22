@@ -7,13 +7,19 @@ import Interviewer from "./Interviewer";
 import Applicant from "./Applicant";
 
 import SuperAdmin from "./SuperAdmin";
+import Admin from "./Admin";
 
 // Config
 import config from "../config";
+import HR from "./HR";
+import User from "./User";
 
 const Home = () => {
   const [loginRedirect, setLoginRedirect] = useState(false);
-  const [superAdmin, setSuperAdmin] = useState(false);
+  const [isSuperAdmin, setSuperAdmin] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
+  const [isHR, setHR] = useState(false);
+  const [isUser, setUserUI] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -35,6 +41,12 @@ const Home = () => {
       if (user.data.role === "ROLE_SUPER_ADMIN") {
         setSuperAdmin(true);
         console.log(user.data);
+      } else if (user.data.role === "ROLE_ADMIN") {
+        setAdmin(true);
+      } else if (user.data.role === "ROLE_HR") {
+        setHR(true);
+      } else {
+        setUserUI(true);
       }
     }
     setLoading(false);
@@ -51,12 +63,10 @@ const Home = () => {
             <Navigate to="/login" />
           ) : (
             <>
-              {superAdmin ? (
-                <SuperAdmin user={user} />
-              ) : (
-                <></>
-                // <Applicant user={user} />
-              )}
+              {isSuperAdmin && <SuperAdmin user={user} />}
+              {isAdmin && <Admin user={user} />}
+              {isHR && <HR user={user} />}
+              {isUser && <User user={user} />}
             </>
           )}
         </>

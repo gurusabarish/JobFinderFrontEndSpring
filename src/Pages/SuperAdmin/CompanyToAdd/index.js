@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React from "react";
 
 import config from "../../../config";
 
@@ -19,14 +18,14 @@ import {
   // InputAdornment,
   InputLabel,
   OutlinedInput,
-  Select,
-  MenuItem,
+  // Select,
+  // MenuItem,
   // Stack,
   Box,
   Button,
   Typography,
   Grid,
-  Divider,
+  // Divider,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { User } from "tabler-icons-react";
@@ -74,6 +73,8 @@ const CompanyToAdd = (props, { ...others }) => {
             // console.log(response);
             setStatus({ success: true });
             setSubmitting(false);
+
+            props.handleCompanyToAdded(false);
           } catch (error) {
             console.log("error signing up", error);
             setStatus({ success: false });
@@ -102,8 +103,9 @@ const CompanyToAdd = (props, { ...others }) => {
           <Grid
             container
             spacing={2}
+            alignItems="center"
+            justifyContent="center"
             py={2}
-            alignItems={"center"}
             justifyItems={"center"}
           >
             <Grid item xs={12} sm={7} p={2}>

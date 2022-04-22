@@ -17,6 +17,9 @@ const SuperAdmin = (props) => {
 
   const [companyToAdded, setCompanyToAdded] = React.useState(false);
 
+  const handleCompanyToAdded = (val) => {
+    setCompanyToAdded(val);
+  };
   return (
     <>
       {companyToAdded ? (
@@ -28,7 +31,7 @@ const SuperAdmin = (props) => {
             p: 2,
           }}
         >
-          <CompanyToAdd />
+          <CompanyToAdd handleCompanyToAdded={handleCompanyToAdded} />
         </Card>
       ) : (
         <h1>Super Admin</h1>

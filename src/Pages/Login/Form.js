@@ -55,7 +55,7 @@ const SignInForm = (props, { ...others }) => {
           setSubmitting(true);
           try {
             const response = await axios.post(
-              `${config.apiURL}/api/auth/signin`,
+              `${config.apiURL}/api/v1/auth/signin`,
               values
             );
 
@@ -63,7 +63,7 @@ const SignInForm = (props, { ...others }) => {
             console.log(values);
 
             if (response.status === 200) {
-              localStorage.setItem("token", response.data.data._id);
+              localStorage.setItem("token", response.data.id);
               setRedirect(true);
             }
             setStatus({ success: true });
