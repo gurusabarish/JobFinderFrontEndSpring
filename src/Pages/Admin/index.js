@@ -1,27 +1,32 @@
 import React, { useState } from "react";
 import CompanyToAdd from "./company";
+import HR from "./HR";
 
 const Admin = (props) => {
   React.useEffect(() => {
     console.log(props.user);
-    if (props.user.company == null || !props.user.enabled) {
-      setCompanyToAdded(true);
+    if (!props.user.enabled) {
+      setCompanyAdded(true);
+    } else {
+      setCompanyAdded(false);
     }
   }, [props.user]);
 
-  const [companyToAdded, setCompanyToAdded] = useState(false);
+  const [companyAdded, setCompanyAdded] = useState(null);
 
-  const handleCompanyToAdded = (val) => {
-    setCompanyToAdded(val);
+  const handleCompanyAdded = (val) => {
+    setCompanyAdded(val);
   };
   return (
     <>
-      {companyToAdded && (
+      {companyAdded && (
         <CompanyToAdd
           user={props.user}
-          handleCompanyToAdded={handleCompanyToAdded}
+          handleCompanyAdded={handleCompanyAdded}
         />
       )}
+
+      {companyAdded === false && <HR user={props.user} />}
     </>
   );
 };

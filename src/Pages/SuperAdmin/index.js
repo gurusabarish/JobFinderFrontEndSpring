@@ -46,22 +46,7 @@ const SuperAdmin = (props) => {
         justifyItems={"center"}
       >
         <Grid item xs={12} sm={6} p={2}>
-          <MainCard
-            title="Companies"
-            // secondary={
-            //   <Button
-            //     disableElevation
-            //     onClick={() => {
-            //       setCreateJob(true);
-            //     }}
-            //     size="medium"
-            //     variant="contained"
-            //     style={{ borderRadius: config.borderRadius }}
-            //   >
-            //     Create
-            //   </Button>
-            // }
-          >
+          <MainCard title="Companies">
             <Company handleCompanyList={handleCompanyList} />
             <Box my={3}>
               {companyList.length > 0 && (

@@ -106,7 +106,7 @@ const CompanyToAdd = (props) => {
                         setStatus({ success: true });
                         setSubmitting(false);
 
-                        props.handleCompanyToAdded(false);
+                        props.handleCompanyAdded(false);
                       } catch (error) {
                         console.log("error signing up", error);
                         setStatus({ success: false });
