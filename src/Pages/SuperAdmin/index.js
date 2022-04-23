@@ -30,7 +30,6 @@ const SuperAdmin = (props) => {
   }, [companyAdded]);
 
   const handleCompanyList = async (company) => {
-    // childRef.current.addCompany(company);
     companyAdd = company;
     setCompanyAdded(company);
     console.log("companyAdded", companyAdded);

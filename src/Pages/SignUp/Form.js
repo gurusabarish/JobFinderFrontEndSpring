@@ -104,12 +104,14 @@ const SignUpForm = (props, { ...others }) => {
           .max(255)
           .required("Email is required"),
 
-        phone: Yup.number().test(
-          "len",
-          "Must be exactly 10 digits and required",
-          (contact_number) =>
-            contact_number && contact_number.toString().length === 10
-        ),
+        phone: Yup.number()
+          .test(
+            "len",
+            "Must be exactly 10 digits and required",
+            (contact_number) =>
+              contact_number && contact_number.toString().length === 10
+          )
+          .required("Required"),
         zipcode: Yup.number(),
 
         country: Yup.string(),

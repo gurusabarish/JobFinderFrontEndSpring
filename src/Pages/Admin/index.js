@@ -22,7 +22,6 @@ const Admin = (props) => {
           handleCompanyToAdded={handleCompanyToAdded}
         />
       )}
-      <h1>Admin</h1>
     </>
   );
 };

@@ -44,17 +44,16 @@ const ResponsiveAppBar = () => {
       {loginRedirect && <Navigate to="/login" />}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          
-          <Link to="/" style={{textDecoration: "none", color: "white"}}>
-            <Typography
+          <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-            >
-                Job Finder
-            </Typography>
-          </Link>
+          >
+            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              Job Finder
+            </Link>
+          </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -88,17 +87,17 @@ const ResponsiveAppBar = () => {
               <InterviewerMenu />
             </Menu>
           </Box>
-          
-            <Link to="/" style={{textDecoration: "none", color: "white"}}>
-              <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-              >
-                Job Finder
-              </Typography>
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+          >
+            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              Job Finder
             </Link>
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <InterviewerMenu />
           </Box>
