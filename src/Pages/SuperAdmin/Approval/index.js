@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 import config from "../../../config";
 
@@ -23,24 +22,6 @@ const useStyles = makeStyles((theme) => ({
 const Approval = (props) => {
   const classes = useStyles();
   const [companyVal, setCompanyVal] = React.useState("");
-  const [companyList, setCompanyList] = React.useState([]);
-
-  React.useEffect(() => {
-    if (props.companyAdded === "") {
-      fetchData();
-    } else {
-      const data = companyList;
-      data.push(props.companyAdded);
-      setCompanyList(data);
-    }
-  }, [props.companyAdded]);
-
-  const fetchData = async () => {
-    const res = await axios.get(
-      `${config.apiURL}/api/v1/company/owner/${localStorage.getItem("token")}`
-    );
-    setCompanyList(res.data);
-  };
 
   // Open company list
   const [open, setOpen] = React.useState(false);
@@ -73,7 +54,7 @@ const Approval = (props) => {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {companyList.map((company) => (
+              {props.companyList.map((company) => (
                 <MenuItem key={company.id} value={company.id}>
                   {company.name}
                 </MenuItem>

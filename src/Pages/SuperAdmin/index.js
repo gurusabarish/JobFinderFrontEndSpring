@@ -1,15 +1,27 @@
 import React from "react";
-
-import Company from "./Company";
-import CompaniesList from "./Company/list";
-
-import Approval from "./Approval";
-
+import axios from "axios";
 import { Box, Grid } from "@mui/material";
 
+import config from "../../config";
+import Company from "./Company";
+import CompaniesList from "./Company/list";
+import Approval from "./Approval";
 import MainCard from "../../Components/MainCard";
 
 const SuperAdmin = (props) => {
+  const [companyList, setCompanyList] = React.useState([]);
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const res = await axios.get(
+      `${config.apiURL}/api/v1/company/owner/${localStorage.getItem("token")}`
+    );
+    setCompanyList(res.data);
+  };
+
   const [companyAdded, setCompanyAdded] = React.useState("");
 
   let companyAdd = "";
@@ -53,13 +65,18 @@ const SuperAdmin = (props) => {
           >
             <Company handleCompanyList={handleCompanyList} />
             <Box my={3}>
-              <CompaniesList companyAdded={companyAdded} />
+              {companyList.length > 0 && (
+                <CompaniesList
+                  companyList={companyList}
+                  companyAdded={companyAdded}
+                />
+              )}
             </Box>
           </MainCard>
         </Grid>
         <Grid item xs={12} sm={6} p={2}>
           <MainCard title="Approval list">
-            <Approval companyAdded={companyAdded} />
+            <Approval companyList={companyList} />
           </MainCard>
         </Grid>
       </Grid>

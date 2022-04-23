@@ -33,28 +33,12 @@ const columns = [
 ];
 
 const CompaniesList = (props) => {
-  const fetchData = React.useCallback(async (userID) => {
-    try {
-      const response = await axios.get(
-        `${config.apiURL}/api/v1/company/owner/${userID}`
-      );
-
-      console.log(response);
-
-      if (response.status === 200) {
-        setRows(response.data);
-      }
-
-      setLoading(false);
-    } catch (err) {
-      console.log("error fetching data", err);
-    }
-  }, []);
-
   useEffect(() => {
     console.log(props.companyAdded);
     if (props.companyAdded === "") {
-      fetchData(localStorage.getItem("token"));
+      console.log("no company added");
+      setRows(props.companyList);
+      setLoading(false);
     } else {
       console.log("props.companyAdded", props.companyAdded);
 
@@ -63,7 +47,7 @@ const CompaniesList = (props) => {
       setRows(data);
       setLoading(false);
     }
-  }, [fetchData, props.companyAdded]);
+  }, [props.companyAdded]);
 
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
