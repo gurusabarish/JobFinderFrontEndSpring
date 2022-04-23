@@ -1,41 +1,68 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-import config from "../../config";
+import Company from "./Company";
+import CompaniesList from "./Company/list";
 
-import CompanyToAdd from "./CompanyToAdd";
+import Approval from "./Approval";
 
-import { Card } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+
+import MainCard from "../../Components/MainCard";
 
 const SuperAdmin = (props) => {
+  const [companyAdded, setCompanyAdded] = React.useState("");
+
+  let companyAdd = "";
   React.useEffect(() => {
-    console.log(props.user);
-    if (props.user.company == null) {
-      setCompanyToAdded(true);
-    }
-  }, [props.user]);
+    setCompanyAdded(companyAdd);
+  }, [companyAdded]);
 
-  const [companyToAdded, setCompanyToAdded] = React.useState(false);
-
-  const handleCompanyToAdded = (val) => {
-    setCompanyToAdded(val);
+  const handleCompanyList = async (company) => {
+    // childRef.current.addCompany(company);
+    companyAdd = company;
+    setCompanyAdded(company);
+    console.log("companyAdded", companyAdded);
   };
+
   return (
     <>
-      {companyToAdded ? (
-        <Card
-          sx={{
-            borderRadius: config.borderRadius,
-            boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
-            backgroundColor: config.secondaryColor,
-            p: 2,
-          }}
-        >
-          <CompanyToAdd handleCompanyToAdded={handleCompanyToAdded} />
-        </Card>
-      ) : (
-        <h1>Super Admin</h1>
-      )}
+      <Grid
+        container
+        spacing={2}
+        // alignItems="center"
+        justifyContent="center"
+        py={2}
+        justifyItems={"center"}
+      >
+        <Grid item xs={12} sm={6} p={2}>
+          <MainCard
+            title="Companies"
+            // secondary={
+            //   <Button
+            //     disableElevation
+            //     onClick={() => {
+            //       setCreateJob(true);
+            //     }}
+            //     size="medium"
+            //     variant="contained"
+            //     style={{ borderRadius: config.borderRadius }}
+            //   >
+            //     Create
+            //   </Button>
+            // }
+          >
+            <Company handleCompanyList={handleCompanyList} />
+            <Box my={3}>
+              <CompaniesList companyAdded={companyAdded} />
+            </Box>
+          </MainCard>
+        </Grid>
+        <Grid item xs={12} sm={6} p={2}>
+          <MainCard title="Approval list">
+            <Approval companyAdded={companyAdded} />
+          </MainCard>
+        </Grid>
+      </Grid>
     </>
   );
 };

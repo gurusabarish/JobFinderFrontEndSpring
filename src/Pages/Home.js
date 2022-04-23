@@ -3,9 +3,6 @@ import { Navigate } from "react-router-dom";
 import axios from "axios";
 import { Typography } from "@mui/material";
 
-import Interviewer from "./Interviewer";
-import Applicant from "./Applicant";
-
 import SuperAdmin from "./SuperAdmin";
 import Admin from "./Admin";
 
@@ -34,7 +31,9 @@ const Home = () => {
       setLoginRedirect(true);
     } else {
       const user = await axios.get(
-        `${config.apiURL}/api/v1/auth/user/${localStorage.getItem("token")}`
+        `${config.apiURL}/api/v1/auth/user?token=${localStorage.getItem(
+          "token"
+        )}`
       );
       setUser(user.data);
 

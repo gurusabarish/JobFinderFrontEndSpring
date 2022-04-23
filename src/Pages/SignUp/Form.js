@@ -104,20 +104,18 @@ const SignUpForm = (props, { ...others }) => {
           .max(255)
           .required("Email is required"),
 
-        phone: Yup.number()
-          .test(
-            "len",
-            "Must be exactly 10 digits and required",
-            (contact_number) =>
-              contact_number && contact_number.toString().length === 10
-          )
-          .required("Required"),
-        zipcode: Yup.number().required("Required"),
+        phone: Yup.number().test(
+          "len",
+          "Must be exactly 10 digits and required",
+          (contact_number) =>
+            contact_number && contact_number.toString().length === 10
+        ),
+        zipcode: Yup.number(),
 
-        country: Yup.string().required("Required"),
-        state: Yup.string().required("Required"),
-        city: Yup.string().required("Required"),
-        address: Yup.string().required("Required"),
+        country: Yup.string(),
+        state: Yup.string(),
+        city: Yup.string(),
+        address: Yup.string(),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
