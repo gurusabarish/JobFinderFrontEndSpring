@@ -4,8 +4,27 @@ import { Box, Grid } from "@mui/material";
 
 import MainCard from "../../Components/MainCard";
 import CreateJob from "./Job";
+import JobsList from "./Job/list";
+import ApplicationsList from "./Applications/list";
 
 const HR = (props) => {
+  const [jobAdded, setJobAdded] = React.useState("");
+  const [applicationList, setApplicationList] = React.useState([]);
+
+  const handleApplicationList = async (application) => {
+    setApplicationList(application);
+  };
+
+  let jobAdd = "";
+  React.useEffect(() => {
+    setJobAdded(jobAdd);
+  }, [jobAdded]);
+
+  const handleJobList = async (job) => {
+    jobAdd = job;
+    setJobAdded(job);
+  };
+
   return (
     <>
       <Grid
@@ -18,12 +37,20 @@ const HR = (props) => {
       >
         <Grid item xs={12} sm={6} p={2}>
           <MainCard title="Jobs">
-            <CreateJob user={props.user} />
-            <Box my={3}></Box>
+            <Box my={3}>
+              <JobsList
+                user={props.user}
+                jobAdded={jobAdded}
+                handleApplicationList={handleApplicationList}
+              />
+            </Box>
+            <CreateJob user={props.user} handleJobList={handleJobList} />
           </MainCard>
         </Grid>
         <Grid item xs={12} sm={6} p={2}>
-          <MainCard title="Application list"></MainCard>
+          <MainCard title="Application list">
+            <ApplicationsList applicationList={applicationList} />
+          </MainCard>
         </Grid>
       </Grid>
     </>

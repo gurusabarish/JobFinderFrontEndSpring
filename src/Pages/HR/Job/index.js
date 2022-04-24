@@ -52,7 +52,7 @@ function CreateJob(props) {
     state: "",
     city: "",
     address: "",
-    zipcode: "",
+    zipCode: "",
 
     companyId: props.user.hrcompanyId,
     createdBy: localStorage.getItem("token"),
@@ -105,7 +105,7 @@ function CreateJob(props) {
               state: Yup.string().required(),
               city: Yup.string().required(),
               address: Yup.string().required(),
-              zipcode: Yup.number().required(),
+              zipCode: Yup.number().required(),
             })}
             onSubmit={async (
               values,
@@ -114,13 +114,13 @@ function CreateJob(props) {
               try {
                 try {
                   console.log(values);
-                  //   const response = await axios.post(
-                  //     `${config.apiURL}/api/v1/auth/hr`,
-                  //     values
-                  //   );
+                  const response = await axios.post(
+                    `${config.apiURL}/api/v1/job`,
+                    values
+                  );
 
-                  //   console.log(response);
-                  //   props.handleCreateHR(response.data);
+                  console.log(response);
+                  props.handleJobList(response.data);
 
                   setStatus({ success: true });
                   setSubmitting(false);
@@ -403,21 +403,21 @@ function CreateJob(props) {
                   <Grid item xs={12} sm={12}>
                     <FormControl
                       fullWidth
-                      error={Boolean(touched.zipcode && errors.zipcode)}
+                      error={Boolean(touched.zipCode && errors.zipCode)}
                       className={classes.formControl}
                     >
                       <InputLabel>ZIP code</InputLabel>
                       <OutlinedInput
                         type="number"
-                        value={values.zipcode}
-                        name="zipcode"
+                        value={values.zipCode}
+                        name="zipCode"
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        label="zipcode"
+                        label="zipCode"
                       />
                     </FormControl>
-                    {touched.zipcode && errors.zipcode && (
-                      <FormHelperText error>{errors.zipcode}</FormHelperText>
+                    {touched.zipCode && errors.zipCode && (
+                      <FormHelperText error>{errors.zipCode}</FormHelperText>
                     )}
                     <Box mb={2} />
                   </Grid>
