@@ -22,7 +22,7 @@ const User = (props) => {
           </MainCard>
         </Grid>
         <Grid item xs={12} sm={6} p={2}>
-          <MainCard title="Approval list">
+          <MainCard title="Application list">
             {/* <Approval companyList={companyList} /> */}
           </MainCard>
         </Grid>

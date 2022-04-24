@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 import {
+  Box,
   Paper,
   Table,
   TableBody,
@@ -12,7 +13,12 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  Grid,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
 } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 // Subcard
 import SubCard from "./../../../Components/SubCard";
@@ -26,22 +32,32 @@ const columns = [
   { id: "salary", label: "Salary range", minWidth: 150 },
   { id: "zipCode", label: "ZIP code", minWidth: 150 },
   { id: "closed", label: "Job status", minWidth: 150 },
-  { id: "action", label: "Action", minWidth: 150 },
 ];
 
+// style constant
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    backgroundColor: config.formColor,
+  },
+}));
+
 const JobsList = (props) => {
+  const classes = useStyles();
+
   useEffect(() => {
+    fetchData();
     setLoading(false);
   }, []);
 
   const fetchData = async () => {
     const response = await axios.get(
-      `${config.apiURL}/api/v1/job/hr/${localStorage.getItem("token")}`
+      `${config.apiURL}/api/v1/job/suggest?city=${props.user.city}&state=${props.user.state}`
     );
     setRows(response.data);
     setLoading(false);
   };
 
+  const [companyName, setCompanyName] = React.useState([]);
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -59,6 +75,29 @@ const JobsList = (props) => {
 
   return (
     <>
+      <Box mb={2}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            <FormControl fullWidth className={classes.formControl}>
+              <InputLabel>Company Name</InputLabel>
+              <OutlinedInput
+                value={companyName}
+                name="name"
+                onChange={async (e) => {
+                  setCompanyName(e.target.value);
+                  const response = await axios.get(
+                    `${config.apiURL}/api/v1/job/title?name=${e.target.value}`
+                  );
+                  console.log(response);
+                  setRows(response.data);
+                }}
+                label="Name"
+              />
+            </FormControl>
+            <Box mb={2} />
+          </Grid>
+        </Grid>
+      </Box>
       {rows.length !== 0 && (
         <SubCard>
           <Paper
