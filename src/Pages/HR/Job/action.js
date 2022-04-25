@@ -1,6 +1,9 @@
 import React from "react";
 import { Menu, IconButton, Button } from "@mui/material";
 import { DotsVertical } from "tabler-icons-react";
+import axios from "axios";
+
+import config from "../../../config";
 
 export default function Action({ data, handleApplicationList }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -13,9 +16,12 @@ export default function Action({ data, handleApplicationList }) {
     setAnchorEl(null);
   };
 
-  const handleViewApplications = () => {
+  const handleViewApplications = async () => {
     console.log("view applications", data);
-    handleApplicationList([data]);
+    const applicationList = await axios.get(
+      `${config.apiURL}/api/v1/application/job/${data.id}`
+    );
+    handleApplicationList(applicationList.data);
     setAnchorEl(null);
   };
 

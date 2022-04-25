@@ -22,11 +22,9 @@ import config from "./../../../config";
 const columns = [
   { id: "title", label: "Job Title", minWidth: 170 },
   { id: "description", label: "Description", minWidth: 130 },
-  { id: "experience", label: "Experience", minWidth: 150 },
-  { id: "salary", label: "Salary range", minWidth: 150 },
-  { id: "zipCode", label: "ZIP code", minWidth: 150 },
-  { id: "closed", label: "Job status", minWidth: 150 },
-  { id: "action", label: "Action", minWidth: 150 },
+  { id: "userEmail", label: "User Email", minWidth: 130 },
+  { id: "resumeLink", label: "Resume Link", minWidth: 150 },
+  { id: "status", label: "Application Status", minWidth: 150 },
 ];
 
 const ApplicationsList = (props) => {
@@ -89,29 +87,34 @@ const ApplicationsList = (props) => {
                         >
                           {columns.map((column) => {
                             const value = row[column.id];
-                            if (column.id === "closed") {
+                            if (column.id === "title") {
                               return (
                                 <TableCell key={column.id} align={column.align}>
-                                  {value ? "Closed" : "Open"}
+                                  {row.job.title}
                                 </TableCell>
                               );
-                              // } else if (column.id === "action") {
-                              //   return (
-                              //     <TableCell key={column.id} align={column.align}>
-                              //       <Action
-                              //         data={row}
-                              //         handleApplicationList={
-                              //           props.handleApplicationList
-                              //         }
-                              //       />
-                              //     </TableCell>
-                              //   );
+                            } else if (column.id === "description") {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {row.job.description}
+                                </TableCell>
+                              );
+                            } else if (column.id === "userEmail") {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {row.user.email}
+                                </TableCell>
+                              );
+                            } else if (column.id === "status") {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {row.job.status}
+                                </TableCell>
+                              );
                             } else {
                               return (
                                 <TableCell key={column.id} align={column.align}>
-                                  {column.format && typeof value === "number"
-                                    ? column.format(value)
-                                    : value}
+                                  {value}
                                 </TableCell>
                               );
                             }
