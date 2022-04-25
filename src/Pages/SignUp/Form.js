@@ -94,6 +94,11 @@ const SignUpForm = (props, { ...others }) => {
         password: "",
         email: "",
         role: "",
+
+        country: "",
+        state: "",
+        city: "",
+        address: "",
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().max(255).required("Name is required"),

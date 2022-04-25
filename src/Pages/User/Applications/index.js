@@ -23,17 +23,14 @@ import { makeStyles } from "@mui/styles";
 
 // Subcard
 import SubCard from "./../../../Components/SubCard";
-import ApplyDialog from "./apply";
 import config from "./../../../config";
 
 const columns = [
   { id: "title", label: "Job Title", minWidth: 170 },
   { id: "description", label: "Description", minWidth: 130 },
-  { id: "experience", label: "Experience", minWidth: 150 },
+  { id: "resumeLink", label: "Resume Link", minWidth: 150 },
   { id: "salary", label: "Salary range", minWidth: 150 },
-  { id: "zipCode", label: "ZIP code", minWidth: 150 },
-  { id: "closed", label: "Job status", minWidth: 150 },
-  { id: "apply", label: "Apply", minWidth: 150 },
+  { id: "status", label: "Application Status", minWidth: 150 },
 ];
 
 // style constant
@@ -43,23 +40,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const JobsList = (props) => {
-  const classes = useStyles();
-
+const ApplicationList = (props) => {
   useEffect(() => {
     fetchData();
-    setLoading(false);
   }, []);
 
   const fetchData = async () => {
     const response = await axios.get(
-      `${config.apiURL}/api/v1/job/suggest?city=${props.user.city}&state=${props.user.state}`
+      `${config.apiURL}/api/v1/application/user/${localStorage.getItem(
+        "token"
+      )}`
     );
     setRows(response.data);
     setLoading(false);
   };
 
-  const [companyName, setCompanyName] = React.useState([]);
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -77,29 +72,6 @@ const JobsList = (props) => {
 
   return (
     <>
-      <Box mb={2}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={12}>
-            <FormControl fullWidth className={classes.formControl}>
-              <InputLabel>Company Name</InputLabel>
-              <OutlinedInput
-                value={companyName}
-                name="name"
-                onChange={async (e) => {
-                  setCompanyName(e.target.value);
-                  const response = await axios.get(
-                    `${config.apiURL}/api/v1/job/title?name=${e.target.value}`
-                  );
-                  console.log(response);
-                  setRows(response.data);
-                }}
-                label="Name"
-              />
-            </FormControl>
-            <Box mb={2} />
-          </Grid>
-        </Grid>
-      </Box>
       {rows.length !== 0 && (
         <SubCard>
           <Paper
@@ -137,53 +109,34 @@ const JobsList = (props) => {
                         >
                           {columns.map((column) => {
                             const value = row[column.id];
-                            if (column.id === "closed") {
+                            if (column.id === "title") {
                               return (
                                 <TableCell key={column.id} align={column.align}>
-                                  {value ? "Closed" : "Open"}
+                                  {row.job.title}
                                 </TableCell>
                               );
-                            } else if (column.id === "apply") {
+                            } else if (column.id === "description") {
                               return (
                                 <TableCell key={column.id} align={column.align}>
-                                  <ApplyDialog data={row} user={props.user} />
-
-                                  {/* <Button
-                                    disableElevation
-                                    onClick={async () => {
-                                      // const res = await axios.post(
-                                      //   `${config.apiURL}/api/v1/auth/admin/approve/${row["id"]}`
-                                      // );
-                                      // console.log(res);
-                                    }}
-                                    size="medium"
-                                    variant="contained"
-                                    style={{
-                                      borderRadius: config.borderRadius,
-                                    }}
-                                    disabled={row["closed"]}
-                                  >
-                                    Apply
-                                  </Button> */}
+                                  {row.job.description}
                                 </TableCell>
                               );
-                              // } else if (column.id === "action") {
-                              //   return (
-                              //     <TableCell key={column.id} align={column.align}>
-                              //       <Action
-                              //         data={row}
-                              //         handleApplicationList={
-                              //           props.handleApplicationList
-                              //         }
-                              //       />
-                              //     </TableCell>
-                              //   );
+                            } else if (column.id === "salary") {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {row.job.salary}
+                                </TableCell>
+                              );
+                            } else if (column.id === "status") {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {row.job.status}
+                                </TableCell>
+                              );
                             } else {
                               return (
                                 <TableCell key={column.id} align={column.align}>
-                                  {column.format && typeof value === "number"
-                                    ? column.format(value)
-                                    : value}
+                                  {value}
                                 </TableCell>
                               );
                             }
@@ -224,4 +177,4 @@ const JobsList = (props) => {
   );
 };
 
-export default JobsList;
+export default ApplicationList;

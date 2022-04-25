@@ -154,6 +154,7 @@ function CreateHR(props) {
                     >
                       <InputLabel>Password</InputLabel>
                       <OutlinedInput
+                        type="password"
                         value={values.password}
                         name="password"
                         onBlur={handleBlur}

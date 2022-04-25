@@ -32,6 +32,12 @@ const SuperAdmin = (props) => {
   const handleCompanyList = async (company) => {
     companyAdd = company;
     setCompanyAdded(company);
+    if (companyList.length === 0) {
+      const companies = companyList;
+      companies.push(company);
+      setCompanyList(companies);
+    }
+    
     console.log("companyAdded", companyAdded);
   };
 

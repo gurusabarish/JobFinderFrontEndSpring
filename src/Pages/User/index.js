@@ -3,6 +3,7 @@ import { Box, Grid } from "@mui/material";
 
 import MainCard from "../../Components/MainCard";
 import JobsList from "./Jobs/list";
+import ApplicationList from "./Applications";
 
 const User = (props) => {
   return (
@@ -23,7 +24,7 @@ const User = (props) => {
         </Grid>
         <Grid item xs={12} sm={6} p={2}>
           <MainCard title="Application list">
-            {/* <Approval companyList={companyList} /> */}
+            <ApplicationList user={props.user} />
           </MainCard>
         </Grid>
       </Grid>
